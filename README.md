@@ -1,2 +1,2 @@
 # visibot
-A bot for checking in and out staff at Andela
+A bot for notifying Staff on visitors who visit them
