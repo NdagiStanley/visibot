@@ -24,17 +24,13 @@ class RealName(Resource):
         r = requests.get(
             'https://slack.com/api/users.list?token={}'.format(token))
         content = r.json().get('members')
-        names = []
-        for id in ids:
-            for user in content:
-                if id == user.get('id') and not user.get('deleted') and not user.get('is_bot'):  # noqa
-                    names.append(
-                        {
-                            'id': id,
-                            'name': user.get('real_name'),
-                            'images': user.get('profile').get('image_48')
-                        }
-                    )
+        names = [{
+            'id': id,
+            'name': user.get('real_name'),
+            'images': user.get('profile').get('image_48')
+        } for id in ids for user in content if (id == user.get('id') and
+                                                not user.get('deleted') and
+                                                not user.get('is_bot'))]
         return names
 
     def get(self):
